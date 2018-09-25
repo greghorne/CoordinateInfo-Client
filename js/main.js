@@ -1,5 +1,3 @@
-var baseLayer = 0
-
 //////////////////////////////////////////////////////////////////////
 // build map layers dynamically from CONST_MAP_LAYERS
 var mapLayers  = [];
@@ -15,7 +13,8 @@ for (n = 0; n < CONST_MAP_LAYERS.length; n++) {
 }
 //////////////////////////////////////////////////////////////////////
 
-
+var baseLayer             = 0   // index of initial map layer to display
+var timeSinceMouseMoveEnd = 0
 //////////////////////////////////////////////////////////////////////
 $(document).ready(function() {
 
@@ -29,8 +28,22 @@ $(document).ready(function() {
     L.control.layers(baseMaps).addTo(map)                     // add all map layers to layer control
     L.control.scale({imperial: true, metric: true}).addTo(map) // add scalebar
 
-    map.on('mousemove', function(e) {
-        console.log(e.latlng)
+
+    var timeout
+    var coordLatLng
+
+    map.on('mousemove', function (e) {
+        if (timeout !== undefined) {
+            coordLatLng = e.latlng
+            window.clearTimeout(timeout);
+        }
+
+        timeout = window.setTimeout(function (e) {
+            // console.log(coordLatLng)
+            var apiString = "coordinate-info.herokuapp.com/api/v1/coord_info?db=mongo&latitude_y=" + coordLatLng.lat + "&longitude_x=" + coordLatLng.lng
+            console.log(apiString)
+        }, 1000);
     })
+
 })
 
