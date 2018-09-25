@@ -1,2 +1,17 @@
 html, body { height: 100%; width: 100%; margin: 0px }
 #map { height: 100%; width: 100% }
+
+.highlight-background {
+    /* background-color: #dbe7ea !important; */
+    background-color: #BC1330 !important;
+    color: white
+  }
+
+  .custom-control {
+    width: 360px;
+    height: 70px;
+    margin: 10px !important;
+    z-index:  800;    
+    font-size: 1.25em !important;
+    font-family: 'Times New Roman', Times, serif;
+  }
