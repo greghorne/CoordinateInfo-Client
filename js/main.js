@@ -29,5 +29,8 @@ $(document).ready(function() {
     L.control.layers(baseMaps).addTo(map)                     // add all map layers to layer control
     L.control.scale({imperial: true, metric: true}).addTo(map) // add scalebar
 
+    map.on('mousemove', function(e) {
+        console.log(e.latlng)
+    })
 })
 
