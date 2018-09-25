@@ -43,8 +43,8 @@ for (n = 0; n < CONST_MAP_LAYERS.length; n++) {
 }
 //////////////////////////////////////////////////////////////////////
 
-var baseLayer             = 0   // index of initial map layer to display
-var timeSinceMouseMoveEnd = 0
+var baseLayer             = 1   // index of initial map layer to display
+
 //////////////////////////////////////////////////////////////////////
 $(document).ready(function() {
 
@@ -52,7 +52,8 @@ $(document).ready(function() {
     var map = L.map('map', {
         center: [ CONST_MAP_DEFAULT_LATITUDEY, CONST_MAP_DEFAULT_LONGITUDEX ],
         zoom: CONST_MAP_INITIAL_ZOOM,
-        layers: [mapLayers[baseLayer]]
+        layers: [mapLayers[baseLayer]],
+        worldCopyJump: true
     });
 
     // L.control.layers(baseMaps).addTo(map)                      // add all map layers to layer control
@@ -71,22 +72,24 @@ $(document).ready(function() {
 
         timeout = window.setTimeout(function (e) {
 
-            var apiString = "https://coordinate-info.herokuapp.com/api/v1/coord_info?db=mongo&latitude_y=" + coordLatLng.lat + "&longitude_x=" + coordLatLng.lng
+            var apiString = "https://coordinate-info.herokuapp.com/api/v1/coord_info?db=pg&latitude_y=" + coordLatLng.lat + "&longitude_x=" + coordLatLng.lng
             $.ajax({ type: "GET", url: apiString }).done(function(response){
                 var results = response.results
                 var myText = ""
                 if (response.success == 1) {
-                    myText = results.country + "</br>" + results.municipality1 + "</br>" + results.municipality2
-                    if (results.municipality_nl1 !== null && results.municipality_nl2 !== null) {
+                    if (results.municipality_nl1 !== null && results.municipality_nl2 !== null &&
+                        results.municipality_nl1 !== ""   && results.municipality_nl2 !== "") {
+
                         myText = results.country + "</br>" + results.municipality1 + " (" + results.municipality_nl1 + ")</br>" + results.municipality2 + " (" + results.municipality_nl2 + ")"
                     } else {
-                        myText = results.country + "</br>" + results.municipality1 + "</br>" + results.municipality2
+                        myText = results.country + "</br>" + results.municipality1
+                        if (results.municipality2 !== null) myText += "</br>" + results.municipality2
                     }
                 }
                 console.log(response)
                 createIncidentTextControl(map, myText)
             })
-        }, 500);
+        }, 300);
     })
 
 })
