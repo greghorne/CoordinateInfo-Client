@@ -117,11 +117,12 @@ $(document).ready(function() {
         timeout = window.setTimeout(function (e) {
 
             var apiString = "https://coordinate-info.herokuapp.com/api/v1/coord_info?db=" + gTypeDB + "&latitude_y=" + coordLatLng.lat + "&longitude_x=" + coordLatLng.lng
-            console.log(apiString)
-            $.ajax({ type: "GET", dataType: "jsonp", url: apiString }).done(function(response){
+
+            $.ajax({ url: apiString }).done(function(response){
+
+                console.log(response)
                 
                 if (response.success == 1 && response.results !== null) {
-                    console.log(response)
 
                     var myText = ""
                     if (response.results.municipality_nl1 !== null && response.results.municipality_nl2 !== null &&
@@ -133,6 +134,8 @@ $(document).ready(function() {
                         if (response.results.municipality2 !== null) myText += "</br>" + response.results.municipality2
                     }
                     textControl(map, myText)      // display information in textControl
+                } else {
+                    if (gMyControl) map.removeControl(gMyControl)  // remove control is already exists
                 }
             })
         }, 250);
