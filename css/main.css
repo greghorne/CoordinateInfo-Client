@@ -8,7 +8,7 @@ html, body { height: 100%; width: 100%; margin: 0px }
   }
 
   .custom-control {
-    width: 360px;
+    width: 380px;
     height: 70px;
     margin: 10px !important;
     z-index:  800;    
