@@ -1,9 +1,45 @@
+//////////////////////////////////////////////////////////////////////
+// read in url parameters and parse into an object
+// function is unforgiving, any error returns empty object
+function getUrlParameterOptions(url, fnCallback) {
+
+    try {
+        var paramsArr = url.split("&")
+        var myObject  = {}
+        var params, myKey, myValue
+
+        for (var counter = 0; counter < paramsArr.length; counter++) {
+            params  = paramsArr[counter].split("=");
+            myKey   = params[0]
+            myValue = params[1];
+
+            myObject[myKey]  = myValue;
+        }
+        fnCallback(myObject);
+    } catch (error) {
+        fnCallback({});
+    }
+};
+//////////////////////////////////////////////////////////////////////
+
+var gTypeDB
+
+//////////////////////////////////////////////////////////////////////
+// read and set url parameters to variables
+function processParams(params) {
+    if (params['db']) { gTypeDB = params['db'] }
+    else { gTypeDB = 'pg' }
+}
+
+//////////////////////////////////////////////////////////////////////
 
 var gMyControl
 
-function createIncidentTextControl(map, title) {
+//////////////////////////////////////////////////////////////////////
+// display text informaiton in textControl
+function textControl(map, displayText) {
 
-    if (gMyControl) map.removeControl(gMyControl)
+    if (gMyControl) map.removeControl(gMyControl)  // remove control is already exists
 
     var textCustomControl = L.Control.extend({
         options: {
@@ -14,18 +50,27 @@ function createIncidentTextControl(map, title) {
             var container;
 
             container = L.DomUtil.create('div', 'highlight-background custom-control cursor-pointer leaflet-bar', L.DomUtil.get('map'));
-            container.innerHTML = "<center>" + title + "</center>"
-
+            container.innerHTML = "<center>" + displayText + "</center>"
             return container;
         },
 
         onRemove: function(map) { }
-
     });
 
     gMyControl = new textCustomControl();
     map.addControl(gMyControl);
 }
+////////////////////////////////////////////////////////////////
+
+
+
+
+//////////////////////////////////////////////////////////////////////
+// read in and process url parameters
+var params = getUrlParameterOptions(window.location.search.slice(1), function(params) {
+    if (params !== {}) processParams(params)
+});
+//////////////////////////////////////////////////////////////////////
 
 
 //////////////////////////////////////////////////////////////////////
@@ -43,7 +88,7 @@ for (n = 0; n < CONST_MAP_LAYERS.length; n++) {
 }
 //////////////////////////////////////////////////////////////////////
 
-var baseLayer             = 1   // index of initial map layer to display
+var baseLayer = 1   // index of initial map layer to display
 
 //////////////////////////////////////////////////////////////////////
 $(document).ready(function() {
@@ -56,9 +101,8 @@ $(document).ready(function() {
         worldCopyJump: true
     });
 
-    // L.control.layers(baseMaps).addTo(map)                      // add all map layers to layer control
+    // L.control.layers(baseMaps).addTo(map)                   // add all map layers to layer control
     L.control.scale({imperial: true, metric: true}).addTo(map) // add scalebar
-
 
     var timeout
     var coordLatLng
@@ -72,25 +116,26 @@ $(document).ready(function() {
 
         timeout = window.setTimeout(function (e) {
 
-            var apiString = "https://coordinate-info.herokuapp.com/api/v1/coord_info?db=pg&latitude_y=" + coordLatLng.lat + "&longitude_x=" + coordLatLng.lng
-            $.ajax({ type: "GET", url: apiString }).done(function(response){
-                var results = response.results
-                var myText = ""
-                if (response.success == 1) {
-                    if (results.municipality_nl1 !== null && results.municipality_nl2 !== null &&
-                        results.municipality_nl1 !== ""   && results.municipality_nl2 !== "") {
+            var apiString = "https://coordinate-info.herokuapp.com/api/v1/coord_info?db=" + gTypeDB + "&latitude_y=" + coordLatLng.lat + "&longitude_x=" + coordLatLng.lng
+            console.log(apiString)
+            $.ajax({ type: "GET", dataType: 'jsonp', url: apiString }).done(function(response){
+                
+                if (response.success == 1 && response.results !== null) {
+                    console.log(response)
 
-                        myText = results.country + "</br>" + results.municipality1 + " (" + results.municipality_nl1 + ")</br>" + results.municipality2 + " (" + results.municipality_nl2 + ")"
+                    var myText = ""
+                    if (response.results.municipality_nl1 !== null && response.results.municipality_nl2 !== null &&
+                        response.results.municipality_nl1 !== ""   && response.results.municipality_nl2 !== "") {
+
+                        myText = response.results.country + "</br>" + response.results.municipality1 + " (" + response.results.municipality_nl1 + ")</br>" + response.results.municipality2 + " (" + response.results.municipality_nl2 + ")"
                     } else {
-                        myText = results.country + "</br>" + results.municipality1
-                        if (results.municipality2 !== null) myText += "</br>" + results.municipality2
+                        myText = response.results.country + "</br>" + response.results.municipality1
+                        if (response.results.municipality2 !== null) myText += "</br>" + response.results.municipality2
                     }
+                    textControl(map, myText)      // display information in textControl
                 }
-                console.log(response)
-                createIncidentTextControl(map, myText)
             })
-        }, 300);
+        }, 250);
     })
-
 })
 
