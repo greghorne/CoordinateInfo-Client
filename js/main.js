@@ -119,9 +119,7 @@ $(document).ready(function() {
             var apiString = "https://coordinate-info.herokuapp.com/api/v1/coord_info?db=" + gTypeDB + "&latitude_y=" + coordLatLng.lat + "&longitude_x=" + coordLatLng.lng
 
             $.ajax({ url: apiString }).done(function(response){
-
-                console.log(response)
-                
+               
                 if (response.success == 1 && response.results !== null) {
 
                     var myText = ""
