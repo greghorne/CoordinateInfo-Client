@@ -116,10 +116,9 @@ $(document).ready(function() {
 
         timeout = window.setTimeout(function (e) {
 
-            console.log("=====> in")
             var apiString = "https://coordinate-info.herokuapp.com/api/v1/coord_info?db=" + gTypeDB + "&latitude_y=" + coordLatLng.lat + "&longitude_x=" + coordLatLng.lng
             console.log(apiString)
-            $.ajax({ type: "GET", dataType: 'jsonp', url: apiString }).done(function(response){
+            $.ajax({ type: "GET", dataType: "jsonp", url: apiString }).done(function(response){
                 
                 if (response.success == 1 && response.results !== null) {
                     console.log(response)
