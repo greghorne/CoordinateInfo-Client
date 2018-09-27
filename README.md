@@ -9,7 +9,7 @@
 
 **_Options:_** There is 1 option that may be added to the URL as a parameter to override default settings:
 
-- db=database: database=pg (default) or database=mongo - specifies to API which database to use.
+- _db=database:_ database=pg (default) or database=mongo - specifies to API which database to use.
 - example: _https://rawgit.com/greghorne/CoordinateInfo-Client/master/index.html?db=pg_
 - example: _https://rawgit.com/greghorne/CoordinateInfo-Client/master/index.html?db=mongo_
 
