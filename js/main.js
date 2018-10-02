@@ -174,7 +174,7 @@ $(document).ready(function() {
         bFirstTime = !bFirstTime
         setTimeout(function() { 
             map.removeControl(gMyControlMessage)
-        }, 5000)
+        }, 10000)
     }
 
 })
