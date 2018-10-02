@@ -3,7 +3,7 @@ html, body { height: 100%; width: 100%; margin: 0px }
 
 .highlight-background {
     /* background-color: #dbe7ea !important; */
-    background-color: #BC1330 !important;
+    background-color: rgb(23, 36, 218) !important;
     color: white
 }
 
@@ -15,7 +15,7 @@ html, body { height: 100%; width: 100%; margin: 0px }
 
 .custom-control {
   width: 380px;
-  height: 70px;
+  height: 75px;
   margin: 10px !important;
   z-index:  800;    
   font-size: 1.25em !important;
