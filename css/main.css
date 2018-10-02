@@ -5,13 +5,28 @@ html, body { height: 100%; width: 100%; margin: 0px }
     /* background-color: #dbe7ea !important; */
     background-color: #BC1330 !important;
     color: white
-  }
+}
 
-  .custom-control {
-    width: 380px;
-    height: 70px;
-    margin: 10px !important;
-    z-index:  800;    
-    font-size: 1.25em !important;
-    font-family: 'Times New Roman', Times, serif;
-  }
+.highlight-background-message {
+  /* background-color: #dbe7ea !important; */
+  background-color: rgb(87, 197, 37) !important;
+  color: white
+}
+
+.custom-control {
+  width: 380px;
+  height: 70px;
+  margin: 10px !important;
+  z-index:  800;    
+  font-size: 1.25em !important;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.custom-control-message {
+  width: 460px;
+  height: 55px;
+  margin: 10px !important;
+  z-index:  800;    
+  font-size: 1.25em !important;
+  font-family: 'Times New Roman', Times, serif;
+}
