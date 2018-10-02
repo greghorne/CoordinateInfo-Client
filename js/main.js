@@ -81,6 +81,16 @@ function textControlMessage(map) {
             container = L.DomUtil.create('div', 'highlight-background-message custom-control-message cursor-pointer leaflet-bar', L.DomUtil.get('map'));
             var container_text = "There may be a short pause while the API spins up from sleep on Heroku.com"
             container.innerHTML = "<center>" + container_text + "</center>"
+
+            // center the control on the map
+            var marginTop   = '-75px'
+            var marginRight = Math.round(($(window).width() - 460) / 2) + 'px'
+
+            container.style.position = 'absolute'
+            container.style.top      = marginTop  
+            container.style.right    = marginRight
+
+            gContainer = container    // need this reference for later
             return container;
         },
 
@@ -171,11 +181,24 @@ $(document).ready(function() {
     // display api spinning up message
     if (bFirstTime) {
         textControlMessage(map)  // display text message
-        bFirstTime = !bFirstTime
+        
         setTimeout(function() { 
+            bFirstTime = !bFirstTime
             map.removeControl(gMyControlMessage)
         }, 15000)
     }
+
+    // repostion text control message at the bottom of the map
+    $(window).resize( function() {
+        console.log("resized...")
+    
+        var marginTop   = -55 + -20 + 'px'
+        var marginRight = Math.round(($(window).width() - 460) / 2) + 'px'
+
+        gContainer.style.position = 'absolute'
+        gContainer.style.top      = marginTop  
+        gContainer.style.right    = marginRight
+    })
 
 })
 
