@@ -51,6 +51,17 @@ function textControl(map, displayText) {
 
             container = L.DomUtil.create('div', 'highlight-background custom-control cursor-pointer leaflet-bar', L.DomUtil.get('map'));
             container.innerHTML = "<center>" + displayText + "</center>"
+
+            // center the control on the map
+            var marginTop   = '10px'
+            var marginRight = Math.round(($(window).width() - 380) / 2) + 'px'
+
+            container.style.position = 'absolute'
+            container.style.top      = marginTop  
+            container.style.right    = marginRight
+
+            gContainer = container    // need this reference for later
+
             return container;
         },
 
@@ -90,7 +101,7 @@ function textControlMessage(map) {
             container.style.top      = marginTop  
             container.style.right    = marginRight
 
-            gContainer = container    // need this reference for later
+            gContainerMessage = container    // need this reference for later
             return container;
         },
 
@@ -188,16 +199,21 @@ $(document).ready(function() {
         }, 15000)
     }
 
-    // repostion text control message at the bottom of the map
+    // repostion text control message boxes
     $(window).resize( function() {
         console.log("resized...")
-    
-        var marginTop   = -55 + -20 + 'px'
-        var marginRight = Math.round(($(window).width() - 460) / 2) + 'px'
 
+        var marginRight = Math.round(($(window).width() - 380) / 2) + 'px'
         gContainer.style.position = 'absolute'
-        gContainer.style.top      = marginTop  
         gContainer.style.right    = marginRight
+
+        var marginTop   = -55 + -20 + 'px'
+        marginRight = Math.round(($(window).width() - 460) / 2) + 'px'
+        gContainerMessage.style.position = 'absolute'
+        gContainerMessage.style.top      = marginTop  
+        gContainerMessage.style.right    = marginRight
+
+
     })
 
 })
