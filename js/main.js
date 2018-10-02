@@ -62,7 +62,35 @@ function textControl(map, displayText) {
 }
 ////////////////////////////////////////////////////////////////
 
+var gMyControlMessage
 
+//////////////////////////////////////////////////////////////////////
+// display text informaiton in textControl
+function textControlMessage(map) {
+
+    if (gMyControlMessage) map.removeControl(gMyControlMessage)  // remove control is already exists
+
+    var textCustomControl = L.Control.extend({
+        options: {
+            position: 'bottomright' 
+        },
+
+        onAdd: function() {
+            var container;
+
+            container = L.DomUtil.create('div', 'highlight-background-message custom-control-message cursor-pointer leaflet-bar', L.DomUtil.get('map'));
+            var container_text = "There may be a short pause while the API spins up from sleep on Heroku.com"
+            container.innerHTML = "<center>" + container_text + "</center>"
+            return container;
+        },
+
+        onRemove: function(map) { }
+    });
+
+    gMyControlMessage = new textCustomControl();
+    map.addControl(gMyControlMessage);
+}
+////////////////////////////////////////////////////////////////
 
 
 //////////////////////////////////////////////////////////////////////
@@ -88,7 +116,8 @@ for (n = 0; n < CONST_MAP_LAYERS.length; n++) {
 }
 //////////////////////////////////////////////////////////////////////
 
-var baseLayer = 1   // index of initial map layer to display
+var baseLayer  = 1   // index of initial map layer to display
+var bFirstTime = true
 
 //////////////////////////////////////////////////////////////////////
 $(document).ready(function() {
@@ -138,5 +167,15 @@ $(document).ready(function() {
             })
         }, 250);
     })
+
+    // display api spinning up message
+    if (bFirstTime) {
+        textControlMessage(map)  // display text message
+        bFirstTime = !bFirstTime
+        setTimeout(function() { 
+            map.removeControl(gMyControlMessage)
+        }, 5000)
+    }
+
 })
 
