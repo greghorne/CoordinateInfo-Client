@@ -137,7 +137,7 @@ for (n = 0; n < CONST_MAP_LAYERS.length; n++) {
 }
 //////////////////////////////////////////////////////////////////////
 
-var baseLayer  = 1   // index of initial map layer to display
+// var baseLayer  = 1   // index of initial map layer to display
 var bFirstTime = true
 
 //////////////////////////////////////////////////////////////////////
@@ -147,11 +147,11 @@ $(document).ready(function() {
     var map = L.map('map', {
         center: [ CONST_MAP_DEFAULT_LATITUDEY, CONST_MAP_DEFAULT_LONGITUDEX ],
         zoom: CONST_MAP_INITIAL_ZOOM,
-        layers: [mapLayers[baseLayer]],
+        layers: [mapLayers[0]],
         worldCopyJump: true
     });
 
-    // L.control.layers(baseMaps).addTo(map)                   // add all map layers to layer control
+    L.control.layers(baseMaps).addTo(map)                   // add all map layers to layer control
     L.control.scale({imperial: true, metric: true}).addTo(map) // add scalebar
 
     var timeout
@@ -201,18 +201,21 @@ $(document).ready(function() {
 
     // repostion text control message boxes
     $(window).resize( function() {
-        console.log("resized...")
 
+        // ============================================================
         var marginRight = Math.round(($(window).width() - 380) / 2) + 'px'
         gContainer.style.position = 'absolute'
         gContainer.style.right    = marginRight
+        // ============================================================
 
+
+        // ============================================================
         var marginTop   = -55 + -20 + 'px'
         marginRight = Math.round(($(window).width() - 460) / 2) + 'px'
         gContainerMessage.style.position = 'absolute'
         gContainerMessage.style.top      = marginTop  
         gContainerMessage.style.right    = marginRight
-
+        // ============================================================
 
     })
 
