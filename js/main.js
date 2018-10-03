@@ -52,11 +52,11 @@ function textControl(map, displayText) {
             container = L.DomUtil.create('div', 'highlight-background custom-control cursor-pointer leaflet-bar', L.DomUtil.get('map'));
             container.innerHTML = "<center>" + displayText + "</center>"
 
-            // center the control on the map
+            // top-center the control on the map
             container.style.position = 'absolute'
             container.style.right    = Math.round(($(window).width() - CONST_MAP_TEXT_CONTROL_WIDTH) / 2) + 'px'
 
-            gContainer = container    // need this reference for later
+            gContainer = container  // need this reference for later
 
             return container;
         },
@@ -86,8 +86,7 @@ function textControlMessage(map) {
             var container;
 
             container = L.DomUtil.create('div', 'highlight-background-message custom-control-message cursor-pointer leaflet-bar', L.DomUtil.get('map'));
-            var container_text = "There may be a short pause while the API spins up from sleep on Heroku.com"
-            container.innerHTML = "<center>" + container_text + "</center>"
+            container.innerHTML = "<center>" + CONST_MAP_TEXT_CONTROL_MESSAGE_TEXT + "</center>"
 
             // bottom-center the control on the map
             container.style.position = 'absolute'
@@ -130,7 +129,6 @@ for (n = 0; n < CONST_MAP_LAYERS.length; n++) {
 }
 //////////////////////////////////////////////////////////////////////
 
-var bFirstTime = true
 
 //////////////////////////////////////////////////////////////////////
 $(document).ready(function() {
@@ -143,7 +141,7 @@ $(document).ready(function() {
         worldCopyJump: true
     });
 
-    L.control.layers(baseMaps).addTo(map)                      // add all map layers to layer control
+    L.control.layers(baseMaps).addTo(map)                      // add map layers to layer control
     L.control.scale({imperial: true, metric: true}).addTo(map) // add scalebar
 
     var timeout
@@ -173,7 +171,7 @@ $(document).ready(function() {
                         myText = response.results.country + "</br>" + response.results.municipality1
                         if (response.results.municipality2 !== null) myText += "</br>" + response.results.municipality2
                     }
-                    textControl(map, myText)      // display information in textControl
+                    textControl(map, myText)  // display information in textControl
                 } else {
                     if (gMyControl) map.removeControl(gMyControl)  // remove control is already exists
                 }
@@ -181,29 +179,25 @@ $(document).ready(function() {
         }, CONST_MAP_MAP_CURSOR_TIMEOUT_MS);
     })
 
-    // display api spinning up message
-    if (bFirstTime) {
-        textControlMessage(map)  // display text message
-        
-        setTimeout(function() { 
-            bFirstTime = !bFirstTime
-            map.removeControl(gMyControlMessage)  // remove text message
-        }, CONST_MAP_MESSAGE_DISPLAY_TIME_MS)
-    }
+    // display api 'spinning up' message
+    textControlMessage(map)
 
-    // repostion text control message boxes
+    setTimeout(function() { 
+        map.removeControl(gMyControlMessage)  // remove text message
+    }, CONST_MAP_MESSAGE_DISPLAY_TIME_MS)
+
+
+    // reposition text control message boxes
     $(window).resize( function() {
 
-        // ============================================================
-        gContainer.style.position = 'absolute'
-        gContainer.style.right    = Math.round(($(window).width() - CONST_MAP_TEXT_CONTROL_WIDTH) / 2) + 'px'
-        // ============================================================
+        // top text control
+        gContainer.style.position        = 'absolute'
+        gContainer.style.right           = Math.round(($(window).width() - CONST_MAP_TEXT_CONTROL_WIDTH) / 2) + 'px'
 
-        // ============================================================
+        // bottom text control displayed on start up
         gContainerMessage.style.position = 'absolute'
         gContainerMessage.style.top      = CONST_MAP_TEXT_CONTROL_MESSAGE_MARGIN_TOP
         gContainerMessage.style.right    = Math.round(($(window).width() - CONST_MAP_TEXT_CONTROL_MESSAGE_WIDTH) / 2) + 'px'
-        // ============================================================
 
     })
 
