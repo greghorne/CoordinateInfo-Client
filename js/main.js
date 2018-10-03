@@ -39,7 +39,7 @@ var gMyControl
 // display text informaiton in textControl
 function textControl(map, displayText) {
 
-    if (gMyControl) map.removeControl(gMyControl)  // remove control is already exists
+    if (gMyControl) map.removeControl(gMyControl)  // remove control if it already exists
 
     var textCustomControl = L.Control.extend({
         options: {
@@ -89,7 +89,7 @@ function textControlMessage(map) {
             var container_text = "There may be a short pause while the API spins up from sleep on Heroku.com"
             container.innerHTML = "<center>" + container_text + "</center>"
 
-            // center the control on the map
+            // bottom-center the control on the map
             container.style.position = 'absolute'
             container.style.top      = CONST_MAP_TEXT_CONTROL_MESSAGE_MARGIN_TOP 
             container.style.right    = Math.round(($(window).width() - CONST_MAP_TEXT_CONTROL_MESSAGE_WIDTH) / 2) + 'px'
@@ -130,7 +130,6 @@ for (n = 0; n < CONST_MAP_LAYERS.length; n++) {
 }
 //////////////////////////////////////////////////////////////////////
 
-// var baseLayer  = 1   // index of initial map layer to display
 var bFirstTime = true
 
 //////////////////////////////////////////////////////////////////////
@@ -144,7 +143,7 @@ $(document).ready(function() {
         worldCopyJump: true
     });
 
-    L.control.layers(baseMaps).addTo(map)                   // add all map layers to layer control
+    L.control.layers(baseMaps).addTo(map)                      // add all map layers to layer control
     L.control.scale({imperial: true, metric: true}).addTo(map) // add scalebar
 
     var timeout
