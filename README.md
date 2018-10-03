@@ -1,7 +1,7 @@
 # CoordinateInfo-Client
 
 **_What does it do?_**
-- CoordinateInfo-Client displays a map and as the mouse cursor is repositioned, an API call is made which returns municipality information on the x, y coordinate position of the mouse cursor.  The API information is displayed in the upper-right portion of the map.
+- CoordinateInfo-Client displays a map and as the mouse cursor is repositioned, an API call is made which returns municipality information on the x, y coordinate position of the mouse cursor.
 
 - This is a companion application to CoordinateInfo-API (https://github.com/greghorne/CoordinateInfo-API) used to consume information via API calls to CoordinateInfo-API.
 
