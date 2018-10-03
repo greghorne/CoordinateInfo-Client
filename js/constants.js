@@ -8,7 +8,7 @@ const CONST_MAP_TEXT_CONTROL_MESSAGE_TEXT       = "There may be a short pause wh
 
 const CONST_MAP_TEXT_CONTROL_MESSAGE_MARGIN_TOP = '-75px';
 
-const CONST_MAP_MAP_CURSOR_TIMEOUT_MS           = 250;
+const CONST_MAP_MAP_CURSOR_TIMEOUT_MS           = 100;
 const CONST_MAP_MESSAGE_DISPLAY_TIME_MS         = 15000;
 
 const CONST_MAP_DEFAULT_BASE_LAYER_INDEX        = 0
