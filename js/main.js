@@ -53,11 +53,8 @@ function textControl(map, displayText) {
             container.innerHTML = "<center>" + displayText + "</center>"
 
             // center the control on the map
-            var marginTop   = '10px'
-            var marginRight = Math.round(($(window).width() - 380) / 2) + 'px'
-
+            var marginRight = Math.round(($(window).width() - CONST_MAP_TEXT_CONTROL_WIDTH) / 2) + 'px'
             container.style.position = 'absolute'
-            container.style.top      = marginTop  
             container.style.right    = marginRight
 
             gContainer = container    // need this reference for later
@@ -94,11 +91,10 @@ function textControlMessage(map) {
             container.innerHTML = "<center>" + container_text + "</center>"
 
             // center the control on the map
-            var marginTop   = '-75px'
-            var marginRight = Math.round(($(window).width() - 460) / 2) + 'px'
+            var marginRight = Math.round(($(window).width() - CONST_MAP_TEXT_CONTROL_MESSAGE_WIDTH) / 2) + 'px'
 
             container.style.position = 'absolute'
-            container.style.top      = marginTop  
+            container.style.top      = CONST_MAP_TEXT_CONTROL_MESSAGE_MARGIN_TOP 
             container.style.right    = marginRight
 
             gContainerMessage = container    // need this reference for later
@@ -203,17 +199,15 @@ $(document).ready(function() {
     $(window).resize( function() {
 
         // ============================================================
-        var marginRight = Math.round(($(window).width() - 380) / 2) + 'px'
+        var marginRight = Math.round(($(window).width() - CONST_MAP_TEXT_CONTROL_WIDTH) / 2) + 'px'
         gContainer.style.position = 'absolute'
         gContainer.style.right    = marginRight
         // ============================================================
 
-
         // ============================================================
-        var marginTop   = -55 + -20 + 'px'
-        marginRight = Math.round(($(window).width() - 460) / 2) + 'px'
+        marginRight = Math.round(($(window).width() - CONST_MAP_TEXT_CONTROL_MESSAGE_WIDTH) / 2) + 'px'
         gContainerMessage.style.position = 'absolute'
-        gContainerMessage.style.top      = marginTop  
+        gContainerMessage.style.top      = CONST_MAP_TEXT_CONTROL_MESSAGE_MARGIN_TOP
         gContainerMessage.style.right    = marginRight
         // ============================================================
 
