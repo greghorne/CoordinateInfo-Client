@@ -1,8 +1,13 @@
 // const CONST_MAP_DEFAULT_LONGITUDEX      = -95.891431;
 // const CONST_MAP_DEFAULT_LATITUDEY       =  36.096613;
-const CONST_MAP_DEFAULT_LONGITUDEX      = -5.2999988;
-const CONST_MAP_DEFAULT_LATITUDEY       = 35.8999964;
-const CONST_MAP_INITIAL_ZOOM            =  3;
+const CONST_MAP_DEFAULT_LONGITUDEX         = -5.2999988;
+const CONST_MAP_DEFAULT_LATITUDEY          = 35.8999964;
+const CONST_MAP_INITIAL_ZOOM               =  3;
+
+const CONST_MAP_TEXT_CONTROL_WIDTH         = 380;
+const CONST_MAP_TEXT_CONTROL_MESSAGE_WIDTH = 460;
+
+const CONST_MAP_TEXT_CONTROL_MESSAGE_MARGIN_TOP = '-75px';
 
 // definition of map layers; first layer is the default layer displayed
 const CONST_MAP_LAYERS = [
