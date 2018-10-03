@@ -53,9 +53,8 @@ function textControl(map, displayText) {
             container.innerHTML = "<center>" + displayText + "</center>"
 
             // center the control on the map
-            var marginRight = Math.round(($(window).width() - CONST_MAP_TEXT_CONTROL_WIDTH) / 2) + 'px'
             container.style.position = 'absolute'
-            container.style.right    = marginRight
+            container.style.right    = Math.round(($(window).width() - CONST_MAP_TEXT_CONTROL_WIDTH) / 2) + 'px'
 
             gContainer = container    // need this reference for later
 
@@ -91,11 +90,9 @@ function textControlMessage(map) {
             container.innerHTML = "<center>" + container_text + "</center>"
 
             // center the control on the map
-            var marginRight = Math.round(($(window).width() - CONST_MAP_TEXT_CONTROL_MESSAGE_WIDTH) / 2) + 'px'
-
             container.style.position = 'absolute'
             container.style.top      = CONST_MAP_TEXT_CONTROL_MESSAGE_MARGIN_TOP 
-            container.style.right    = marginRight
+            container.style.right    = Math.round(($(window).width() - CONST_MAP_TEXT_CONTROL_MESSAGE_WIDTH) / 2) + 'px'
 
             gContainerMessage = container    // need this reference for later
             return container;
@@ -143,7 +140,7 @@ $(document).ready(function() {
     var map = L.map('map', {
         center: [ CONST_MAP_DEFAULT_LATITUDEY, CONST_MAP_DEFAULT_LONGITUDEX ],
         zoom: CONST_MAP_INITIAL_ZOOM,
-        layers: [mapLayers[0]],
+        layers: [mapLayers[CONST_MAP_DEFAULT_BASE_LAYER_INDEX]],
         worldCopyJump: true
     });
 
@@ -182,7 +179,7 @@ $(document).ready(function() {
                     if (gMyControl) map.removeControl(gMyControl)  // remove control is already exists
                 }
             })
-        }, 250);
+        }, CONST_MAP_MAP_CURSOR_TIMEOUT_MS);
     })
 
     // display api spinning up message
@@ -191,24 +188,22 @@ $(document).ready(function() {
         
         setTimeout(function() { 
             bFirstTime = !bFirstTime
-            map.removeControl(gMyControlMessage)
-        }, 15000)
+            map.removeControl(gMyControlMessage)  // remove text message
+        }, CONST_MAP_MESSAGE_DISPLAY_TIME_MS)
     }
 
     // repostion text control message boxes
     $(window).resize( function() {
 
         // ============================================================
-        var marginRight = Math.round(($(window).width() - CONST_MAP_TEXT_CONTROL_WIDTH) / 2) + 'px'
         gContainer.style.position = 'absolute'
-        gContainer.style.right    = marginRight
+        gContainer.style.right    = Math.round(($(window).width() - CONST_MAP_TEXT_CONTROL_WIDTH) / 2) + 'px'
         // ============================================================
 
         // ============================================================
-        marginRight = Math.round(($(window).width() - CONST_MAP_TEXT_CONTROL_MESSAGE_WIDTH) / 2) + 'px'
         gContainerMessage.style.position = 'absolute'
         gContainerMessage.style.top      = CONST_MAP_TEXT_CONTROL_MESSAGE_MARGIN_TOP
-        gContainerMessage.style.right    = marginRight
+        gContainerMessage.style.right    = Math.round(($(window).width() - CONST_MAP_TEXT_CONTROL_MESSAGE_WIDTH) / 2) + 'px'
         // ============================================================
 
     })
