@@ -15,7 +15,7 @@
 
 **_Data:_** For more information on the data source, please refer to: https://github.com/greghorne/CoordinateInfo-API
 
-**_Tech Stack:_** Leaflet v1.3.3 & Javascript
+**_Tech Stack:_** Leaflet v1.3.3 & Javascript (Client-side execution only thus there is no web server.)
 
 
 
