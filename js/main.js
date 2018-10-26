@@ -156,7 +156,7 @@ $(document).ready(function() {
 
         timeout = window.setTimeout(function (e) {
 
-            var apiString = "https://coordinate-info.herokuapp.com/api/v1/coord_info?db=" + gTypeDB + "&latitude_y=" + coordLatLng.lat + "&longitude_x=" + coordLatLng.lng
+            var apiString = "http://zotac1.ddns.net:3100/api/v1/coord_info?db=" + gTypeDB + "&latitude_y=" + coordLatLng.lat + "&longitude_x=" + coordLatLng.lng
 
             $.ajax({ url: apiString }).done(function(response){
                
@@ -179,27 +179,33 @@ $(document).ready(function() {
         }, CONST_MAP_MAP_CURSOR_TIMEOUT_MS);
     })
 
-    // display api 'spinning up' message
-    textControlMessage(map)
 
-    setTimeout(function() { 
-        map.removeControl(gMyControlMessage)  // remove text message
-    }, CONST_MAP_MESSAGE_DISPLAY_TIME_MS)
+    // 
+    // 
+    // CoofdinateInfo-API moved off of Heroku so the followoing user message is no longer needed
+    // 
+    // 
+    // // display api 'spinning up' message
+    // textControlMessage(map)
+
+    // setTimeout(function() { 
+    //     map.removeControl(gMyControlMessage)  // remove text message
+    // }, CONST_MAP_MESSAGE_DISPLAY_TIME_MS)
 
 
-    // reposition text control message boxes
-    $(window).resize( function() {
+    // // reposition text control message boxes
+    // $(window).resize( function() {
 
-        // top text control
-        gContainer.style.position        = 'absolute'
-        gContainer.style.right           = Math.round(($(window).width() - CONST_MAP_TEXT_CONTROL_WIDTH) / 2) + 'px'
+    //     // top text control
+    //     gContainer.style.position        = 'absolute'
+    //     gContainer.style.right           = Math.round(($(window).width() - CONST_MAP_TEXT_CONTROL_WIDTH) / 2) + 'px'
 
-        // bottom text control displayed on start up
-        gContainerMessage.style.position = 'absolute'
-        gContainerMessage.style.top      = CONST_MAP_TEXT_CONTROL_MESSAGE_MARGIN_TOP
-        gContainerMessage.style.right    = Math.round(($(window).width() - CONST_MAP_TEXT_CONTROL_MESSAGE_WIDTH) / 2) + 'px'
+    //     // bottom text control displayed on start up
+    //     gContainerMessage.style.position = 'absolute'
+    //     gContainerMessage.style.top      = CONST_MAP_TEXT_CONTROL_MESSAGE_MARGIN_TOP
+    //     gContainerMessage.style.right    = Math.round(($(window).width() - CONST_MAP_TEXT_CONTROL_MESSAGE_WIDTH) / 2) + 'px'
 
-    })
+    // })
 
 })
 
